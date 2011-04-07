@@ -3,7 +3,7 @@
 *Start new Kohana projects using using format based request handling*
 
 - **Version:** 0.1.0
-- **URL:** <https://github.com/Luwe/Kohana-Core>
+- **URL:** <https://github.com/Luwe/Kohana-Base-Alternative>
 
 ## Description
 
