@@ -100,7 +100,7 @@ abstract class Ljcore_Controller_Default extends Controller {
     
     if ($this->auto_render === TRUE)
     {
-      // Throw exception if none of the accept-type is not supported
+      // Throw exception if none of the accept-types is not supported
       $format = $this->request->param('format');
 
       if ( ! isset($this->_accept_formats[$format]))
