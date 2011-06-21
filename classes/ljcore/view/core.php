@@ -13,7 +13,7 @@
  * @copyright  (c) 2010-2011 Lieuwe Jan Eilander
  */
 abstract class Ljcore_View_Core extends Kostache_Layout {
-   
+
   /**
    * Add initial settings from a config file to an existing array
    * 

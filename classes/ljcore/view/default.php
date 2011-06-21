@@ -12,10 +12,10 @@
 abstract class Ljcore_View_Default extends Ljcore_View_Core {
   
   /**
-   * Holds the website layout template
+   * Holds the website layout template (set by controller)
    * @var  string  
    */
-  protected $_layout = 'default';  
+  protected $_layout;  
   
   /**
    * Array of javascript files relative to the js mediapath in config
