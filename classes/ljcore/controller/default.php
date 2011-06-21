@@ -56,14 +56,17 @@ abstract class Ljcore_Controller_Default extends Controller {
    * @var  string  
    */
   protected $_response_format;
-  
+
   /**
    * Supported output formats for this controller (specify subdir where templates are found + header accept-type)
+   * 
+   *   '.format' => array(layout, subtemplate, type)
+   *
    * @var  array
    */
   protected $_accept_formats = array(
-    '.html' => array('dir' => '',     'type' => 'text/html'),
-    '.json' => array('dir' => 'json', 'type' => 'application/json'),
+    '.html' => array('layout' => 'default', 'subtemplate' => NULL, 'type' => 'text/html'),
+    '.json' => array('layout' => 'json', 'subtemplate' => 'json', 'type' => 'application/json'),
   );
   
   /**
@@ -115,7 +118,7 @@ abstract class Ljcore_Controller_Default extends Controller {
       $view_path = strtolower($view_path);
       
       // Set view object
-      $this->view = $this->_prepare_view($view_path, $this->_response_format['dir']);
+      $this->view = $this->_prepare_view($view_path);
     }
 
     // Initialize session (default adapter is database)
@@ -154,25 +157,26 @@ abstract class Ljcore_Controller_Default extends Controller {
    * @param   string   Requested response format
    * @return  mixed
    */
-  protected function _prepare_view($view_path, $format_dir = '')
+  protected function _prepare_view($view_path)
   { 
-    // Include format_path if needed
-    $full_view_path = trim($view_path.'/'.$format_dir, '/');
-    
+    // Setup view class
+    $class = 'View_'.str_replace('/', '_', $view_path);
+
+    // Setup full path to template for the view class
+    $full_path = trim($view_path.'/'.$this->_response_format['subtemplate'], '/');
+
     try
     {
-      return Kostache::factory($full_view_path);
+      // Try to get the View class
+      $view = new $class($full_path);
+      $view->set('_layout', $this->_response_format['layout']);
     }
     catch (Kohana_Exception $e)
     {
-      // If no View class exists, try to send back the bare template (useful for static content)
-      if ($file = Kohana::find_file('templates', $full_view_path, 'mustache'))
-      {
-        return file_get_contents($file);
-      }
-
-      return NULL;
+      // Try to send back the bare template (useful for static content)
+      $view = ($file = Kohana::find_file('templates', $full_path, 'mustache')) ? file_get_contents($file) : NULL;
     }
+    return $view;
   }
 
   /**
