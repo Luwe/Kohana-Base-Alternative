@@ -9,7 +9,7 @@
  * @author     Lieuwe Jan Eilander
  * @copyright  (c) 2010-2011 Lieuwe Jan Eilander
  */
-abstract class Ljcore_View_Default extends Ljcore_View_Core {
+abstract class Ljcore_View_Default extends View_Core {
   
   /**
    * Holds the website layout template (set by controller)
