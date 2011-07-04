@@ -6,7 +6,9 @@
  * subrequests within an HMVC structure or AJAX widgets. The response body
  * will be sent back in the format provided by the accept header.
  * 
- * @todo       Add Cookie support
+ * @todo       Use an array for setting auto_render and allowed request types per action
+ *             Instead of globally for the entire controller. Otherwise, the before
+ *             method needs to be overridden every time.
  * @uses       Modules/Kostache v3.1.x <git://github.com/zombor/KOstache.git>
  * @package    LJCore
  * @author     Lieuwe Jan Eilander
@@ -167,7 +169,10 @@ abstract class Ljcore_Controller_Default extends Controller {
 
     try
     {
-      // Try to get the View class
+      // try to get the View class
+      if ( ! class_exists($class))
+        return NULL;
+
       $view = new $class($full_path);
       $view->set('_layout', $this->_response_format['layout']);
     }
