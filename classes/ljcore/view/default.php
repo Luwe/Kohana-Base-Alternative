@@ -10,6 +10,12 @@
  * @copyright  (c) 2010-2011 Lieuwe Jan Eilander
  */
 abstract class Ljcore_View_Default extends View_Core {
+
+  /**
+   * Config file to get initial layout settings from
+   * @var  string
+   */
+  protected $_layout_config = 'website';
   
   /**
    * Holds the website layout template (set by controller)
@@ -46,7 +52,8 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function favicon()
   {
-    return URL::site(Kohana::config('media.images').Kohana::config('website.favicon'), NULL, FALSE);
+    return URL::site(Kohana::config('media.images')
+      .Kohana::config($this->_layout_config.'favicon'), NULL, FALSE);
   }
   
   /**
@@ -57,7 +64,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function scripts()
   {
     // Add initial global scripts
-    $this->_scripts = $this->_add_initial_settings($this->_scripts, 'website', 'files.js');
+    $this->_scripts = $this->_add_initial_settings($this->_scripts, $this->_layout_config, 'files.js');
     
     $scripts = array();
     
@@ -78,7 +85,11 @@ abstract class Ljcore_View_Default extends View_Core {
   public function stylesheets() 
   {
     // Add initial global stylesheets
-    $this->_stylesheets = $this->_add_initial_settings($this->_stylesheets, 'website', 'files.css'); 
+    $this->_stylesheets = $this->_add_initial_settings(
+      $this->_stylesheets, 
+      $this->_layout_config, 
+      'files.css'
+    ); 
     
     $stylesheets = array();
     
