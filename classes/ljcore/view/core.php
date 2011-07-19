@@ -28,14 +28,12 @@ abstract class Ljcore_View_Core extends Kostache_Layout {
    * @param   mixed  config variable (dotnotation enabled type.subtype etc.)
    * @return  array
    */
-  protected function _add_initial_settings(
-    array $var, $config_file = $this->_layout_config, $type = 'css')
+  protected function _add_initial_settings(array $var, $type = 'css')
   {
-    $config_file = (string) $config_file;
     $type = ($type) ? '.'. (string) $type : '';
     
     // Check if initial array exists, otherwise send back original $var
-    if ( ! ($initial = Kohana::config($config_file.$type)))
+    if ( ! ($initial = Kohana::config($this->_layout_config.$type)))
       return $var;
 
     return array_merge($initial, $var);

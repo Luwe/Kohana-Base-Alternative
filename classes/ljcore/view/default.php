@@ -58,11 +58,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function scripts()
   {
     // Add initial global scripts
-    $this->_scripts = $this->_add_initial_settings(
-      $this->_scripts,
-      $this->_layout_config,
-      'files.js'
-    );
+    $this->_scripts = $this->_add_initial_settings($this->_scripts, 'files.js');
     
     $scripts = array();
     
@@ -83,11 +79,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function stylesheets() 
   {
     // Add initial global stylesheets
-    $this->_stylesheets = $this->_add_initial_settings(
-      $this->_stylesheets, 
-      $this->_layout_config, 
-      'files.css'
-    ); 
+    $this->_stylesheets = $this->_add_initial_settings($this->_stylesheets, 'files.css'); 
     
     $stylesheets = array();
     
