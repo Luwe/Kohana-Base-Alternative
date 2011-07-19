@@ -15,6 +15,12 @@
 abstract class Ljcore_View_Core extends Kostache_Layout {
 
   /**
+   * Config file to get initial layout settings from
+   * @var  string
+   */
+  protected $_layout_config = 'website';
+  
+  /**
    * Add initial settings from a config file to an existing array
    * 
    * @param   mixed  array to prepend initial settings to
@@ -22,7 +28,8 @@ abstract class Ljcore_View_Core extends Kostache_Layout {
    * @param   mixed  config variable (dotnotation enabled type.subtype etc.)
    * @return  array
    */
-  protected function _add_initial_settings(array $var, $config_file = 'website', $type = 'css')
+  protected function _add_initial_settings(
+    array $var, $config_file = $this->_layout_config, $type = 'css')
   {
     $config_file = (string) $config_file;
     $type = ($type) ? '.'. (string) $type : '';

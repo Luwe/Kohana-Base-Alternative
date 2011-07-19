@@ -12,12 +12,6 @@
 abstract class Ljcore_View_Default extends View_Core {
 
   /**
-   * Config file to get initial layout settings from
-   * @var  string
-   */
-  protected $_layout_config = 'website';
-  
-  /**
    * Holds the website layout template (set by controller)
    * @var  string  
    */
@@ -64,7 +58,11 @@ abstract class Ljcore_View_Default extends View_Core {
   public function scripts()
   {
     // Add initial global scripts
-    $this->_scripts = $this->_add_initial_settings($this->_scripts, $this->_layout_config, 'files.js');
+    $this->_scripts = $this->_add_initial_settings(
+      $this->_scripts,
+      $this->_layout_config,
+      'files.js'
+    );
     
     $scripts = array();
     
