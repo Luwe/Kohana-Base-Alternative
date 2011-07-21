@@ -47,7 +47,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function favicon()
   {
     return URL::site(Kohana::config('media.images')
-      .Kohana::config($this->_layout_config.'favicon'), NULL, FALSE);
+      .Kohana::config($this->_layout_config.'.favicon'), NULL, FALSE);
   }
   
   /**
