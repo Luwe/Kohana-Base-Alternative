@@ -36,7 +36,7 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function title()
   {
-    return (string) Kohana::config('website.title');
+    return (string) Kohana::$config->load('website.title');
   } 
   
   /**
@@ -46,8 +46,8 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function favicon()
   {
-    return URL::site(Kohana::config('media.images')
-      .Kohana::config($this->_layout_config.'.favicon'), NULL, FALSE);
+    return URL::site(Kohana::$config->load('media.images')
+      .Kohana::$config->load($this->_layout_config.'.favicon'), NULL, FALSE);
   }
   
   /**
@@ -108,7 +108,7 @@ abstract class Ljcore_View_Default extends View_Core {
     // Check if filename has protocol
     if ( ! strchr($file, '://'))
     {
-      $file = URL::site(Kohana::config('media.'.$extension).$file, NULL, FALSE);
+      $file = URL::site(Kohana::$config->load('media.'.$extension).$file, NULL, FALSE);
     }
     
     return $file;

@@ -2,7 +2,7 @@
 
 *Start new Kohana projects using using format based request handling*
 
-- **Version:** 0.2.0
+- **Version:** 0.3.0
 - **URL:** <https://github.com/Luwe/Kohana-Base-Alternative>
 
 ## Description
@@ -13,11 +13,11 @@ Based on the LJBase module I've made earlier, but with a key difference: accept 
 
 - ### kohana/core
   - **url** : <https://github.com/kohana/core>
-  - **version** : `3.1.x`
+  - **version** : `3.2.x`
   
 - ### modules/kostache
 	- **url** : <https://github.com/zombor/KOstache>
-  - **version** : `3.1.x`
+  - **version** : `3.2.x`
 
 ## Usage
 

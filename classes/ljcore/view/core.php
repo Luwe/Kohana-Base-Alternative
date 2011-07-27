@@ -33,7 +33,7 @@ abstract class Ljcore_View_Core extends Kostache_Layout {
     $type = ($type) ? '.'. (string) $type : '';
     
     // Check if initial array exists, otherwise send back original $var
-    if ( ! ($initial = Kohana::config($this->_layout_config.$type)))
+    if ( ! ($initial = Kohana::$config->load($this->_layout_config.$type)))
       return $var;
 
     return array_merge($initial, $var);
