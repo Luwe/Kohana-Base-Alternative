@@ -36,7 +36,7 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function title()
   {
-    return (string) Kohana::$config->load('website.title');
+    return (string) Kohana::$config->load($this->_layout_config.'.title');
   } 
   
   /**
