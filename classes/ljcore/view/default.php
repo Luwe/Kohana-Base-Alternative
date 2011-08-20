@@ -36,7 +36,7 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function title()
   {
-    return (string) Kohana::$config->load($this->_layout_config.'.title');
+    return (string) $this->config['title'];
   } 
   
   /**
@@ -46,8 +46,8 @@ abstract class Ljcore_View_Default extends View_Core {
    */
   public function favicon()
   {
-    return URL::site(Kohana::$config->load('media.images')
-      .Kohana::$config->load($this->_layout_config.'.favicon'), NULL, FALSE);
+    return URL::site(Kohana::$config->load('media')->get('images')
+      .$this->config['favicon'], NULL, FALSE);
   }
   
   /**
@@ -58,11 +58,10 @@ abstract class Ljcore_View_Default extends View_Core {
   public function scripts()
   {
     // Add initial global scripts
-    $this->_scripts = $this->_add_initial_settings($this->_scripts, 'files.js');
-    
+    $raw = $this->config['files']['js'] + $this->_scripts;
     $scripts = array();
     
-    foreach ($this->_scripts as $file)
+    foreach ($raw as $file)
     {
       $file = $this->_format_media_uri($file, 'js');
       $scripts[] = $file;
@@ -79,11 +78,10 @@ abstract class Ljcore_View_Default extends View_Core {
   public function stylesheets() 
   {
     // Add initial global stylesheets
-    $this->_stylesheets = $this->_add_initial_settings($this->_stylesheets, 'files.css'); 
-    
+    $raw = $this->config['files']['css'] + $this->_stylesheets;
     $stylesheets = array();
     
-    foreach ($this->_stylesheets as $stylesheet)
+    foreach ($raw as $stylesheet)
     {      
       $file = $this->_format_media_uri($stylesheet['file'], 'css');
       $stylesheets[] = array('file' => $file, 'media' => $stylesheet['media']);
@@ -108,7 +106,7 @@ abstract class Ljcore_View_Default extends View_Core {
     // Check if filename has protocol
     if ( ! strchr($file, '://'))
     {
-      $file = URL::site(Kohana::$config->load('media.'.$extension).$file, NULL, FALSE);
+      $file = URL::site(Kohana::$config->load('media')->get($extension).$file, NULL, FALSE);
     }
     
     return $file;

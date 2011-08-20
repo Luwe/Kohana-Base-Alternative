@@ -15,28 +15,38 @@
 abstract class Ljcore_View_Core extends Kostache_Layout {
 
   /**
+   * Holds the config array
+   * @var  array
+   */
+  public $config;
+
+  /**
    * Config file to get initial layout settings from
    * @var  string
    */
-  protected $_layout_config = 'website';
-  
-  /**
-   * Add initial settings from a config file to an existing array
-   * 
-   * @param   mixed  array to prepend initial settings to
-   * @param   mixed  config file
-   * @param   mixed  config variable (dotnotation enabled type.subtype etc.)
-   * @return  array
-   */
-  protected function _add_initial_settings(array $var, $type = 'css')
-  {
-    $type = ($type) ? '.'. (string) $type : '';
-    
-    // Check if initial array exists, otherwise send back original $var
-    if ( ! ($initial = Kohana::$config->load($this->_layout_config.$type)))
-      return $var;
+  protected $_config_file = 'website';
 
-    return array_merge($initial, $var);
+  /**
+   * Overloaded render method to include config setting and pre_rendering
+   *
+   * @return  string
+   */
+  public function render()
+  {
+    $this->config = Kohana::$config->load($this->_config_file)->as_array();
+    $this->pre_render();
+
+    return parent::render();
   }
-  
+
+  /**
+   * Pre-render method
+   *
+   * @return  void
+   */
+  public function pre_render()
+  {
+    // Everything that needs to happen after config, but before rendering
+  }
+
 }
