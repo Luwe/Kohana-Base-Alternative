@@ -12,6 +12,12 @@
 abstract class Ljcore_View_Default extends View_Core {
 
   /**
+   * Config file to get initial layout settings from
+   * @var  string
+   */
+  protected $_config_file = 'website';
+
+  /**
    * Holds the website layout template (set by controller)
    * @var  string  
    */
@@ -110,6 +116,29 @@ abstract class Ljcore_View_Default extends View_Core {
     }
     
     return $file;
+  }
+
+  /**
+   * Overloaded render method to include config setting and pre_rendering
+   *
+   * @return  string
+   */
+  public function render()
+  {
+    $this->config = Kohana::$config->load($this->_config_file)->as_array();
+    $this->pre_render();
+
+    return parent::render();
+  }
+
+  /**
+   * Pre-render method
+   *
+   * @return  void
+   */
+  public function pre_render()
+  {
+    // Everything that needs to happen after config, but before rendering
   }
   
 }
