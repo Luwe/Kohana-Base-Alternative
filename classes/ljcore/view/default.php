@@ -64,7 +64,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function scripts()
   {
     // Add initial global scripts
-    $raw = $this->config['files']['js'] + $this->_scripts;
+    $raw = array_merge($this->config['files']['js'], $this->_scripts);
     $scripts = array();
     
     foreach ($raw as $file)
@@ -84,7 +84,7 @@ abstract class Ljcore_View_Default extends View_Core {
   public function stylesheets() 
   {
     // Add initial global stylesheets
-    $raw = $this->config['files']['css'] + $this->_stylesheets;
+    $raw = array_merge($this->config['files']['css'], $this->_stylesheets);
     $stylesheets = array();
     
     foreach ($raw as $stylesheet)
