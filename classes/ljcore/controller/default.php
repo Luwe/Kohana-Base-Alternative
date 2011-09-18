@@ -55,22 +55,10 @@ abstract class Ljcore_Controller_Default extends Controller {
    
   /**
    * Hold the response format for this request
-   * @var  string  
+   * @var  array  
    */
-  protected $_response_format;
+  protected $_format;
 
-  /**
-   * Supported output formats for this controller (specify subdir where templates are found + header accept-type)
-   * 
-   *   '.format' => array(layout, subtemplate, type)
-   *
-   * @var  array
-   */
-  protected $_accept_formats = array(
-    '.html' => array('layout' => 'default', 'subtemplate' => NULL, 'type' => 'text/html'),
-    '.json' => array('layout' => 'json', 'subtemplate' => 'json', 'type' => 'application/json'),
-  );
-  
   /**
    * Method which is executed before any action takes place   
    * 
@@ -106,13 +94,11 @@ abstract class Ljcore_Controller_Default extends Controller {
     if ($this->auto_render === TRUE)
     {
       // Throw exception if none of the accept-types is not supported
-      $format = $this->request->param('format');
+      $this->_format = Kohana::$config->load('formats')
+        ->get($this->request->param('format'));
 
-      if ( ! isset($this->_accept_formats[$format]))
+      if ($this->_format === NULL)
         throw new Http_Exception_415('Unsupported accept-type', NULL);
-    
-      // Set response type
-      $this->_response_format = $this->_accept_formats[$format];
 
       // Set path to view class
       $directory = Request::current()->directory() ? Request::current()->directory().'/' : '';
@@ -142,7 +128,7 @@ abstract class Ljcore_Controller_Default extends Controller {
         throw new Http_Exception_404('Page not found');
       
       // Set header content-type to response format
-      $this->response->headers('Content-Type', $this->_response_format['type']);
+      $this->response->headers('Content-Type', $this->_format['type']);
       
       // Set response body
       $this->response->body($this->view);
@@ -165,21 +151,22 @@ abstract class Ljcore_Controller_Default extends Controller {
     $class = 'View_'.str_replace('/', '_', $view_path);
 
     // Setup full path to template for the view class
-    $full_path = trim($view_path.'/'.$this->_response_format['subtemplate'], '/');
+    $full_path = trim($view_path.'/'.$this->_format['subtemplate'], '/');
 
     try
     {
-      // try to get the View class
       if ( ! class_exists($class))
-        return NULL;
+        throw new Http_Exception_404('Page not found');
 
       $view = new $class($full_path);
-      $view->set('_layout', $this->_response_format['layout']);
+      $view->set('_layout', $this->_format['layout']);
     }
     catch (Kohana_Exception $e)
     {
       // Try to send back the bare template (useful for static content)
-      $view = ($file = Kohana::find_file('templates', $full_path, 'mustache')) ? file_get_contents($file) : NULL;
+      $view = ($file = Kohana::find_file('templates', $full_path, 'mustache')) 
+        ? file_get_contents($file) 
+        : NULL;
     }
     return $view;
   }
