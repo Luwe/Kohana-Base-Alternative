@@ -140,5 +140,15 @@ abstract class Ljcore_View_Default extends View_Core {
   {
     // Everything that needs to happen after config, but before rendering
   }
+
+  /**
+   * Return base uri
+   *
+   * @return  string
+   */
+  public function base_uri()
+  {
+    return URL::base();
+  }
   
 }
