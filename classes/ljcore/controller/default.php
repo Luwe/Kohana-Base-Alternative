@@ -206,7 +206,7 @@ abstract class Ljcore_Controller_Default extends Controller {
     $uri = Route::get($route)->uri($components);
 
     // Redirect
-    $this->request->redirect($uri);
+    $this->redirect($uri);
   }
   
 }

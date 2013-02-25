@@ -123,7 +123,7 @@ abstract class Ljcore_View_Default extends View_Core {
    *
    * @return  string
    */
-  public function render()
+  public function render($class, $template = NULL)
   {
     $this->config = Kohana::$config->load($this->_config_file)->as_array();
     $this->pre_render();
