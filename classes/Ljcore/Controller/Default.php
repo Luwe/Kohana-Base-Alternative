@@ -24,6 +24,12 @@ abstract class Ljcore_Controller_Default extends Controller {
   const REQUEST_AJAX     = 3;
 
   /**
+   * Holds the view object for the current request
+   * @var  Kostache_Layout
+   */
+  public $view;
+
+  /**
    * Holds the current session
    * @var  Kohana_Session
    */
