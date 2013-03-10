@@ -24,12 +24,6 @@ abstract class Ljcore_Controller_Default extends Controller {
   const REQUEST_AJAX     = 3;
 
   /**
-   * Holds the view object for the current request
-   * @var  Kostache
-   */
-  public $view;
-
-  /**
    * Holds the current session
    * @var  Kohana_Session
    */
@@ -117,7 +111,6 @@ abstract class Ljcore_Controller_Default extends Controller {
       // Set path to view class
       $directory = Request::current()->directory() ? Request::current()->directory().'/' : '';
       $view_path = $directory.Request::current()->controller().'/'.Request::current()->action();
-      $view_path = strtolower($view_path);
       
       // Set view object
       $this->view = $this->_prepare_view($view_path);
@@ -169,12 +162,7 @@ abstract class Ljcore_Controller_Default extends Controller {
 
     try
     {
-      // try to get the View class
-      if ( ! class_exists($class))
-        return NULL;
-
-      $view = new $class($full_path);
-      $view->set('_layout', $this->_response_format['layout']);
+      $view = Kostache_Layout::factory()->render(new $class);
     }
     catch (Kohana_Exception $e)
     {
